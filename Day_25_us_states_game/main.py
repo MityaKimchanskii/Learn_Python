@@ -18,19 +18,18 @@ all_states = data.state.to_list()
 # turtle.onscreenclick(get_mouse_click_coor)
 #
 # turtle.mainloop()
+
 guessed_states = []
 while len(guessed_states) < 50:
     answer_state = screen.textinput(title=f'{len(guessed_states)}/50 States Correct',
                                     prompt="What's another state's name?").title()
 
     if answer_state == 'Exit':
-        missing_states = []
-        for state in all_states:
-            if state not in guessed_states:
-                missing_states.append(state)
+        missing_states = [state for state in all_states if state not in guessed_states]
         new_data = pandas.DataFrame(missing_states)
         new_data.to_csv('missing_states')
         break
+
     if answer_state in all_states and answer_state not in guessed_states:
         guessed_states.append(answer_state)
         t = turtle.Turtle()
